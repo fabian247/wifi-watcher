@@ -1,0 +1,28 @@
+{
+  "name": "wifi_watcher",
+  "version": "0.1.0",
+  "description": "Description that needs to be changed some time soon",
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "buster": "^0.7.18",
+    "coveralls": "^2.11.14",
+    "eslint": "^3.9.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.3.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "istanbul": "^0.4.5",
+    "nyc": "^8.4.0"
+  },
+  "scripts": {
+    "eslintfix": "eslint --fix **/*.js",
+    "test": "buster-test -g Unit",
+    "cover": "nyc --reporter=lcov --reporter=text buster-test",
+    "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
+  },
+  "dependencies": {
+    "verror": "^1.9.0",
+    "string-similarity": "^1.1.0",
+    "keyword-extractor": "0.0.13",
+    "pcap": "https://github.com/mranney/node_pcap.git"
+  }
+}
