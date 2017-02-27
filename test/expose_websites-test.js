@@ -6,10 +6,14 @@ const filename = 'iad-if-wlan_24.02.17_2029.eth'
 buster.testCase('get Decoded Packets', {
   'should return decoded packets': function () {
     return app.getDecodedPackets(filename)
-    .then((res) => {
+    .then((res, err) => {
       console.log('Test: decoded %d packages.', res.packets.length)
       buster.assert.equals(5375, res.packets.length)
     })
+  },
+  'should reject promise if no file or empty file': function () {
+    buster.assert.match(app.getDecodedPackets('')
+    .then(() => {}), Promise.reject(new Error('Could not open file.')))
   }
 })
 
