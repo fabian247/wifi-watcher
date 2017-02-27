@@ -7,7 +7,7 @@ buster.testCase('get Decoded Packets', {
   'should return decoded packets': function () {
     return app.getDecodedPackets(filename)
     .then((res) => {
-      console.log(res.packets.length)
+      console.log('Test: decoded %d packages.', res.packets.length)
       buster.assert.equals(5375, res.packets.length)
     })
   }
@@ -18,10 +18,17 @@ buster.testCase('get Websites', {
     this.decPackets = app.getDecodedPackets(filename)
   },
   'should return Websites': function () {
-    return app.getWebsites(this.decPackets)
+    var result
+    return this.decPackets
     .then((res) => {
-      console.log(res.packets.length)
-      buster.assert.equals(5375, res.packets.length)
+      result = res
+    })
+    .then((res) => {
+      var promisedWebsites = app.getWebsites(result)
+      console.log('Test Websites: ')
+      console.log('dhosts: %d shosts: %d', promisedWebsites.dhosts.length, promisedWebsites.shosts.length)
+      buster.assert.equals(5375, promisedWebsites.dhosts.length)
+      buster.assert.equals(5375, promisedWebsites.shosts.length)
     })
   }
 })
