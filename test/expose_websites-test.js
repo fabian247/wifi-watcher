@@ -38,8 +38,19 @@ buster.testCase('get Websites', {
     })
     .then((res) => {
       var promisedWebsites = app.getWebsites(result)
+      // TODO: generate testfile in test setUp
       buster.assert.equals(5375, promisedWebsites.dhosts.length)
       buster.assert.equals(5375, promisedWebsites.shosts.length)
+    })
+  },
+  'should throw exception if input is no object with array packets or with array not of type of pcap_packages': function () {
+    var input = 12
+    buster.assert.exception(() => {
+      app.getWebsites(input)
+    })
+    input = { packets: 12 }
+    buster.assert.exception(() => {
+      app.getWebsites(input)
     })
   }
 })
