@@ -77,7 +77,6 @@ buster.testCase('process Packet', {
   'should call correct packet handler': function () {
     var stub = this.stub(app, 'handleIPv4Packet')
     app.processPacket(this.ipv4Packet)
-    console.log('before assertion')
     buster.assert.called(stub)
   },
   'should call correct packet handler ipv6': function () {
