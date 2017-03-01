@@ -30,36 +30,6 @@ buster.testCase('get Decoded Packets', {
   }
 })
 
-buster.testCase('get Websites', {
-  setUp: function () {
-    this.decPackets = app.getDecodedPacketsFromFile(filename)
-  },
-  'should return Websites': function () {
-    var result
-    return this.decPackets
-    .then((res) => {
-      result = res
-      // console.log(res)
-    })
-    .then((res) => {
-      var promisedWebsites = app.getWebsites(result)
-      // TODO: generate testfile in test setUp
-      buster.assert.equals(5375, promisedWebsites.dhosts.length)
-      buster.assert.equals(5375, promisedWebsites.shosts.length)
-    })
-  },
-  'should throw exception if input is no object with array packets or with array not of type of pcap_packages': function () {
-    var input = 12
-    buster.assert.exception(() => {
-      app.getWebsites(input)
-    })
-    input = { packets: 12 }
-    buster.assert.exception(() => {
-      app.getWebsites(input)
-    })
-  }
-})
-
 buster.testCase('process Packet', {
   setUp: function () {
     this.ipv4Packet = {
