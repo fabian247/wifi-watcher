@@ -1,8 +1,11 @@
 const buster = require('buster')
 const sinon = require('sinon')
 const app = require('../lib/expose_websites')
+const IPv4 = require('pcap/decode/ipv4_addr')
 
 const filename = 'iad-if-wlan_24.02.17_2029.eth'
+
+this.log = sinon.stub(console, 'log')
 
 buster.testCase('get Decoded Packets', {
   'should return decoded packets': function () {
@@ -86,14 +89,17 @@ buster.testCase('process Packet', {
   }
 })
 
-// buster.testCase('handle IPv4 Packet', {
-//   setUp: function () {
-//     this.packet = {
-//       saddr: { addr: [ 192, 168, 178, 33 ] },
-//       daddr: { addr: [ 85, 124, 84, 253 ] }
-//     }
-//   },
-//   'should return sender IP and receiver IP': function () {
-//     buster.assert.equals(app.handleIPv4Packet(this.packet), {senderIP: '192.168.178.33', receiverIP: '85.124.84.253'})
-//   }
-// })
+buster.testCase('handle IPv4 Packet', {
+  setUp: function () {
+    this.saddr = new IPv4()
+    this.saddr.addr = [192, 168, 178, 33]
+    this.daddr = new IPv4()
+    this.daddr.addr = [85, 124, 84, 253]
+  },
+  'should return sender IP and receiver IP as Strings': function () {
+    var saddr = this.saddr
+    var daddr = this.daddr
+    var packet = { saddr, daddr }
+    buster.assert.equals(app.handleIPv4Packet(packet), {senderIP: '192.168.178.33', receiverIP: '85.124.84.253'})
+  }
+})
