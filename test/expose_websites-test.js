@@ -5,7 +5,7 @@ const IPv4 = require('pcap/decode/ipv4_addr')
 
 const filename = 'iad-if-wlan_24.02.17_2029.eth'
 
-this.log = sinon.stub(console, 'log')
+// this.log = sinon.stub(console, 'log')
 
 buster.testCase('get Decoded Packets', {
   'should return decoded packets': function () {
@@ -71,5 +71,18 @@ buster.testCase('handle IPv4 Packet', {
     var daddr = this.daddr
     var packet = { saddr, daddr }
     buster.assert.equals(app.handleIPv4Packet(packet), {senderIP: '192.168.178.33', receiverIP: '85.124.84.253'})
+  }
+})
+
+buster.testCase('lookup Websites', {
+  setUp: function () {
+    this.timeout = 1000
+    this.websiteIP = '216.58.205.195' // www.google.de
+  },
+  'should return name of website': function () {
+    return app.lookupWebsites(this.websiteIP)
+    .then((res) => {
+      buster.assert.match(res, '1e100')
+    })
   }
 })
