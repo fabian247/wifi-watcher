@@ -20,9 +20,6 @@
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "verror": "^1.9.0",
-    "string-similarity": "^1.1.0",
-    "keyword-extractor": "0.0.13",
     "pcap": "https://github.com/mranney/node_pcap.git"
   }
 }

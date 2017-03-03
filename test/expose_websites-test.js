@@ -3,7 +3,7 @@ const sinon = require('sinon')
 const app = require('../lib/expose_websites')
 const IPv4 = require('pcap/decode/ipv4_addr')
 
-const filename = 'iad-if-wlan_24.02.17_2029.eth'
+const filename = '../iad-if-wlan_24.02.17_2029.eth'
 
 // this.log = sinon.stub(console, 'log')
 
