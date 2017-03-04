@@ -3,34 +3,7 @@ const sinon = require('sinon')
 const app = require('../lib/expose_websites')
 const IPv4 = require('pcap/decode/ipv4_addr')
 
-const filename = '../iad-if-wlan_24.02.17_2029.eth'
-
-// this.log = sinon.stub(console, 'log')
-
-buster.testCase('get Decoded Packets', {
-  // this testcase relies on a local dump of packages not in git
-  // TODO: create a dummy-dumpfile for upload
-  '//should return decoded packets': function () {
-    return app.getDecodedPacketsFromFile(filename)
-    .then((res, err) => {
-      buster.assert.equals(5375, res.packets.length)
-    })
-  },
-  'should reject promise if no file': function () {
-    return app.getDecodedPacketsFromFile('')
-    .then((res) => {}, (err) => {
-      buster.assert.equals(err, new Error())
-      buster.assert.match(err.message, 'No such file')
-    })
-  },
-  'should reject promise if file is empty': function () {
-    return app.getDecodedPacketsFromFile('emptyFile.txt')
-    .then((res) => {}, (err) => {
-      buster.assert.equals(err, new Error())
-      buster.assert.match(err.message, 'File is empty')
-    })
-  }
-})
+// this.log = sinon.stub(console, 'log') // prevents console.log() output
 
 buster.testCase('process Packet', {
   setUp: function () {
