@@ -1,15 +1,16 @@
 const buster = require('buster')
 const app = require('../lib/fileIO')
 
-const filename = '../iad-if-wlan_24.02.17_2029.eth'
+const filename = './http_with_jpegs.cap'
+// source: https://wiki.wireshark.org/SampleCaptures?action=AttachFile&do=get&target=http_with_jpegs.cap.gz
 
 buster.testCase('get Decoded Packets', {
   // this testcase relies on a local dump of packages not in git
   // TODO: create a dummy-dumpfile for upload
-  '//should return decoded packets': function () {
+  'should return decoded packets': function () {
     return app.getDecodedPacketsFromFile(filename)
     .then((res, err) => {
-      buster.assert.equals(5375, res.packets.length)
+      buster.assert.equals(476, res.packets.length)
     })
   },
   'should reject promise if no file': function () {
