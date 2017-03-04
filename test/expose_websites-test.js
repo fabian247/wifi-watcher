@@ -8,7 +8,9 @@ const filename = '../iad-if-wlan_24.02.17_2029.eth'
 // this.log = sinon.stub(console, 'log')
 
 buster.testCase('get Decoded Packets', {
-  'should return decoded packets': function () {
+  // this testcase relies on a local dump of packages not in git
+  // TODO: create a dummy-dumpfile for upload
+  '//should return decoded packets': function () {
     return app.getDecodedPacketsFromFile(filename)
     .then((res, err) => {
       buster.assert.equals(5375, res.packets.length)
@@ -56,6 +58,9 @@ buster.testCase('process Packet', {
     var stub = sinon.stub(app, 'handleIPv6Packet')
     app.processPacket(this.ipv6Packet)
     buster.assert.called(stub)
+  },
+  'should return default string if package not known': function () {
+    buster.assert.match(app.processPacket({payload: { ethertype: 0 }}), 'Don\'t know')
   }
 })
 
@@ -82,7 +87,27 @@ buster.testCase('lookup Websites', {
   'should return name of website': function () {
     return app.lookupWebsites(this.websiteIP)
     .then((res) => {
+      // 1e100.com is googles single domain name
       buster.assert.match(res, '1e100')
     })
+  }
+})
+
+buster.testCase('get local IP', {
+  // local IP is hardcoded as 192.168.178.0 for now
+  // TODO: make local IP a variable
+  'should return local IP adress if one adress is local and the other not': function () {
+    var local = '192.168.178.2'
+    var receiver = '50.0.0.1'
+    var result = app.getLocalAddress(local, receiver)
+    // console.log(result)
+    buster.assert.equals(result, {local, receiver})
+  },
+  'should return local IP adress even if close match': function () {
+    var local = '192.168.179.2'
+    var receiver = '192.168.178.1'
+    var result = app.getLocalAddress(local, receiver)
+    // console.log(result)
+    buster.assert.equals(result, {local: receiver, receiver: local})
   }
 })
