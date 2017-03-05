@@ -11,13 +11,14 @@ buster.testCase('server test', {
     app.stopServer()
     buster.assert.calledWith(this.listen, 1234)
   },
-  'should return welcome page on all routes': function (done) {
+  'should return monitoring page on all routes': function (done) {
+    this.timeout = 1000
     supertest(app.startServer(1234))
     .get('/')
     .expect(200)
     .end(done((err, res) => {
       buster.refute(err)
-      buster.assert.match(res.text, /Your IP/)
+      buster.assert.match(res.text, /You visited following IP addresses/)
       app.stopServer()
     }))
     supertest(app.startServer(1234))
@@ -25,7 +26,7 @@ buster.testCase('server test', {
     .expect(200)
     .end(done((err, res) => {
       buster.refute(err)
-      buster.assert.match(res.text, /Your IP/)
+      buster.assert.match(res.text, /You visited following IP addresses/)
       app.stopServer()
     }))
   }
