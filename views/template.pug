@@ -1,11 +1,14 @@
 html(lang="en")
   head
     meta(name='viewport', content='width=device-width initial-scale=1')
-    title= siteName
+    title= 'Wifi Monitor'
     link(type='text/css', rel='stylesheet', href='styles/main.css')
     link(rel='icon', type='image/png', href='image/' + site + '.png')
   body(class=site)
     div.page-wrap
       header
-        h1 #{siteName} is down. :(
-        p We will be back up soon.
+        h1 Your IP #{myIP} is monitored.
+        p You visited following IP addresses:
+          ul
+            each val in ipList= ipList
+              li= val
