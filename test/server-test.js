@@ -1,6 +1,6 @@
 const buster = require('buster')
-const app = require('../lib/server')
 const supertest = require('supertest')
+const app = require('../lib/server')
 
 buster.testCase('server test', {
   setUp: function () {
