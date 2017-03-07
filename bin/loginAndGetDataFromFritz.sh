@@ -32,15 +32,15 @@ if [[ -z $challenge ]]; then
 	echo "No challenge found"
 	exit 0
 fi
-echo "Challenge found: $challenge"
+# echo "Challenge found: $challenge"
 
 challenge_bf="$challenge-$PASSWORD"
 challenge_bf=$(echo -n $challenge_bf | iconv -f ISO8859-1 -t UTF-16LE | md5sum -b)
 challenge_bf=$(echo $challenge_bf | sed "s/ .*$//")
 response_bf="$challenge-$challenge_bf"
 
-echo "Response for challenge: "
-echo "$response_bf"
+# echo "Response for challenge: "
+# echo "$response_bf"
 
 url="http://$SERVER/login_sid.lua"
 
@@ -51,7 +51,7 @@ sidRsp=$(curl --header "Accept: text/html,application/xhtml+xml,application/xml"
 
 sid=$(echo $sidRsp | sed "s/^.*<SID>//" | sed "s/<\/SID>.*$//")
 
-echo "SID: $sid"
+# echo "SID: $sid"
 
 regex="^0+$"
 if [[ $sid =~ $regex ]]; then
@@ -59,11 +59,11 @@ if [[ $sid =~ $regex ]]; then
 	exit 0
 fi
 
-echo "Password valid"
-echo "Starting capture with curl"
+# echo "Password valid"
+# echo "Starting capture with curl"
 
 # Internet Capture
 # dump download in file dumpfile.eth
-#curl -o dumpfile.eth "http://$SERVER/cgi-bin/capture_notimeout?ifaceorminor=1-$INTERFACE&snaplen=1600&capture=Start&sid=$sid"
+# curl -o dumpfile.eth "http://$SERVER/cgi-bin/capture_notimeout?ifaceorminor=1-$INTERFACE&snaplen=1600&capture=Start&sid=$sid"
 # return download to stdout
 curl "http://$SERVER/cgi-bin/capture_notimeout?ifaceorminor=1-$INTERFACE&snaplen=1600&capture=Start&sid=$sid"
