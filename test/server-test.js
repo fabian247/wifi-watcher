@@ -31,3 +31,9 @@ buster.testCase('server test', {
     }))
   }
 })
+
+buster.testCase('cleanIP', {
+  'Should return clean IP': function () {
+    buster.assert.equals(app.cleanIP('::ffff:0.0.0.0'), '0.0.0.0')
+  }
+})
