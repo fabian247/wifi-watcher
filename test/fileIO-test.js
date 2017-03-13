@@ -41,7 +41,7 @@ buster.testCase('get entries from db', {
       ]
     }
     var result = ['10.1.1.1', '209.225.11.237', '209.225.0.6']
-    buster.assert.equals(app.getEntriesFromDB(db, '10.1.1.101'), result)
-    buster.assert.equals(app.getEntriesFromDB(db, '10.1.1.1'), ['10.1.1.101'])
+    buster.assert.equals(app.getEntriesFromDatabase(db, '10.1.1.101'), result)
+    buster.assert.equals(app.getEntriesFromDatabase(db, '10.1.1.1'), ['10.1.1.101'])
   }
 })
