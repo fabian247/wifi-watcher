@@ -6,8 +6,8 @@ buster.testCase('server test', {
     this.listen = this.spy(app, 'startServer')
   },
   'should listen on port 1234': function () {
-    var server = app.startServer(1234)
+    var server = app.startServer(2314)
     app.stopServer(server)
-    buster.assert.calledWith(this.listen, 1234)
+    buster.assert.calledWith(this.listen, 2314)
   }
 })
