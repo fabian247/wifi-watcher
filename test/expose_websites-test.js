@@ -32,8 +32,13 @@ buster.testCase('process Packet', {
     app.processPacket(this.ipv6Packet)
     buster.assert.called(stub)
   },
-  'should return default string if package not known': function () {
-    buster.assert.match(app.processPacket({payload: { ethertype: 0 }}), 'Don\'t know')
+  'should throw error if package not known': function () {
+    try {
+      app.processPacket({payload: { ethertype: 0 }})
+    } catch (error) {
+      buster.assert.equals(error, new Error())
+      buster.assert.match(error.message, 'Don\'t know')
+    }
   }
 })
 
