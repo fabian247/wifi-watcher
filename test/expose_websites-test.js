@@ -63,7 +63,7 @@ buster.testCase('lookup Websites', {
     this.websiteIP = '216.58.205.195' // www.google.de
   },
   'should return name of website': function () {
-    return app.lookupWebsites(this.websiteIP)
+    return app.reverseLookupOfIP(this.websiteIP)
     .then((res) => {
       // 1e100.com is googles single domain name
       buster.assert.match(res, '1e100')
