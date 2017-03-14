@@ -22,6 +22,6 @@
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "pcap": "https://github.com/mranney/node_pcap.git",
+    "pcap": "https://github.com/mranney/node_pcap.git"
   }
 }
