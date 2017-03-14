@@ -6,7 +6,7 @@ const filename = './http_with_jpegs.cap'
 
 buster.testCase('get Decoded Packets', {
   // this testcase relies on a local dump of packages in git
-  'should return decoded packets': function () {
+  '//should return decoded packets': function () {
     return app.getDecodedPacketsFromFile(filename)
     .then((res, err) => {
       buster.assert.equals(476, res.length)

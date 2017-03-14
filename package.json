@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "pcap": "https://github.com/mranney/node_pcap.git",
+    "pcap-parser": "^0.2.1",
     "vows": "^0.8.1"
   }
 }
