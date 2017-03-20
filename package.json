@@ -18,7 +18,7 @@
   "scripts": {
     "eslintfix": "eslint --fix **/*.js",
     "test": "buster-test -g Unit",
-    "cover": "nyc --reporter=lcov --reporter=text buster-test",
+    "cover": "nyc --reporter=lcov --reporter=text npm test",
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
