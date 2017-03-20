@@ -9,6 +9,9 @@ buster.testCase('createPcapSessionFromStdin', {
     buster.assert.calledOnce(pcap.createOfflineSession)
   },
   'should throw error if creation of pcapSession fails': function () {
-    this.stub(app, 'createPcapSessionFromStream')
+    this.stub(pcap, 'createOfflineSession').throws(new Error())
+    buster.assert.exception(function () {
+      app.createPcapSessionFromStdin()
+    })
   }
 })
