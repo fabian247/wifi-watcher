@@ -1,6 +1,7 @@
 const buster = require('buster')
-const app = require('../lib/database')
 const fs = require('fs')
+const mockRequire = require('mock-require')
+const app = require('../lib/database')
 
 buster.testCase('get entries from db', {
   'should return IP Adresses from database': function () {
@@ -66,5 +67,27 @@ buster.testCase('writeToDatabase', {
     var database = {1: ['2']}
     app.writeToDatabase(database, connection)
     buster.assert(this.stubWriteToFile.notCalled)
+  }
+})
+
+buster.testCase('loadDatabase', {
+  'should return database if require finds file': function () {
+    var filename = 'filePresent'
+    var result = {1: ['1']}
+    mockRequire(filename, result)
+    buster.assert.equals(app.loadDatabase(filename), result)
+  },
+  'should return empty database if require cannot find file': function () {
+    var filename = 'fileNotPresent'
+    var result = {}
+    mockRequire(filename, './throwModuleNotFoundExceptionWhenRequired')
+    buster.assert.equals(app.loadDatabase(filename), result)
+  },
+  'should throw Error if require fails other than MODULE_NOT_FOUND': function () {
+    var filename = 'fileFailsOtherThanNotFound'
+    mockRequire(filename, './throwExceptionWhenRequired')
+    buster.assert.exception(function () {
+      app.loadDatabase(filename)
+    })
   }
 })
