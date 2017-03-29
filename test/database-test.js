@@ -1,6 +1,7 @@
 const buster = require('buster')
 const fs = require('fs')
 const mockRequire = require('mock-require')
+const exposeWebsites = require('../lib/expose_websites')
 const app = require('../lib/database')
 
 buster.testCase('get entries from db', {
@@ -89,5 +90,34 @@ buster.testCase('loadDatabase', {
     buster.assert.exception(function () {
       app.loadDatabase(filename)
     })
+  }
+})
+
+buster.testCase('writeConnectionToDatabase', {
+  setUp: function () {
+    this.stubWriteToDatabase = this.stub(app, 'writeToDatabase')
+    this.stubLoadDatabase = this.stub(app, 'loadDatabase')
+    this.stubGetLocalAdress = this.stub(exposeWebsites, 'getLocalAddress')
+  },
+  tearDown: function () {
+    this.stubWriteToDatabase.restore()
+    this.stubLoadDatabase.restore()
+    this.stubGetLocalAdress.restore()
+  },
+  'should return without writing to database if senderIP or receiverIP is not set': function () {
+    app.writeConnectionToDatabase({})
+    buster.assert(this.stubWriteToDatabase.notCalled)
+    app.writeConnectionToDatabase({senderIP: '192.168.178.1'})
+    buster.assert(this.stubWriteToDatabase.notCalled)
+    app.writeConnectionToDatabase({receiverIP: '192.168.178.1'})
+    buster.assert(this.stubWriteToDatabase.notCalled)
+  },
+  'should load database if senderIP and receiverIP are present': function () {
+    app.writeConnectionToDatabase({senderIP: '192.168.178.2', receiverIP: '192.168.178.1'})
+    buster.assert(this.stubLoadDatabase.calledOnce)
+  },
+  'should get connection if senderIP and receiverIP are present': function () {
+    app.writeConnectionToDatabase({senderIP: '192.168.178.2', receiverIP: '192.168.178.1'})
+    buster.assert(this.stubGetLocalAdress.calledOnce)
   }
 })
