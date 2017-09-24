@@ -3,26 +3,43 @@
   "version": "0.1.0",
   "description": "Description that needs to be changed some time soon",
   "license": "AGPL-3.0",
-  "devDependencies": {
-    "buster": "^0.7.18",
-    "coveralls": "^2.11.14",
-    "eslint": "^3.9.0",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-plugin-promise": "^3.3.0",
-    "eslint-plugin-standard": "^2.0.1",
-    "istanbul": "^0.4.5",
-    "nyc": "^8.4.0",
-    "pug": "^2.0.0-beta11",
-    "supertest": "^2.0.1"
-  },
   "scripts": {
     "eslintfix": "eslint --fix **/*.js",
+    "lint": "eslint --ext js,jsx .",
     "test": "buster-test -g Unit",
     "cover": "nyc --reporter=lcov --reporter=text npm test",
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "mock-require": "^2.0.1",
-    "pcap": "https://github.com/mranney/node_pcap.git"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-node6": "^11.0.0",
+    "express": "^4.15.4",
+    "pcap": "git+https://github.com/mranney/node_pcap.git"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.7.2",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "sinon": "^3.3.0",
+    "sinon-chai": "^2.13.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    }
   }
 }
