@@ -4,21 +4,27 @@
   "description": "Description that needs to be changed some time soon",
   "license": "AGPL-3.0",
   "scripts": {
-    "eslintfix": "eslint --fix **/*.js",
-    "lint": "eslint --ext js,jsx .",
-    "test": "buster-test -g Unit",
-    "cover": "nyc --reporter=lcov --reporter=text npm test",
-    "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
+    "test": "mocha --compilers js:babel-core/register"
+  },
+  "babel": {
+    "presets": [
+      "stage-3",
+      "latest"
+    ]
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-latest": "^6.24.1",
     "babel-preset-node6": "^11.0.0",
+    "babel-preset-stage-3": "^6.24.1",
     "express": "^4.15.4",
-    "pcap": "git+https://github.com/mranney/node_pcap.git"
+    "pcap": "git+https://github.com/mranney/node_pcap.git",
+    "pug": "^2.0.0-rc.4"
   },
   "devDependencies": {
+    "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "eslint": "^4.7.2",
     "eslint-config-standard": "^10.2.1",
@@ -26,8 +32,10 @@
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^3.5.3",
     "sinon": "^3.3.0",
-    "sinon-chai": "^2.13.0"
+    "sinon-chai": "^2.13.0",
+    "supertest": "^3.0.0"
   },
   "eslintConfig": {
     "env": {
