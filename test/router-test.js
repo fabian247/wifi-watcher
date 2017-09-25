@@ -1,33 +1,40 @@
-const buster = require('buster')
-const supertest = require('supertest')
-const app = require('../lib/router')
+import { expect } from 'chai'
+import supertest from 'supertest'
+import { makeServer, killServer, removeIPv6Preface } from '../lib/router'
 
-buster.testCase('router test', {
-  'should return monitoring page on all routes': function (done) {
-    this.timeout = 1000
-    var router = app.makeServer(1234)
-    supertest(router)
-    .get('/')
-    .expect(200)
-    .end(done((err, res) => {
-      buster.refute(err)
-      buster.assert.match(res.text, /You visited following IP addresses/)
-      app.stopServer(router)
-    }))
-    router = app.makeServer(4321)
-    supertest(router)
-    .post('/anotherRoute')
-    .expect(200)
-    .end(done((err, res) => {
-      buster.refute(err)
-      buster.assert.match(res.text, /You visited following IP addresses/)
-      app.stopServer(router)
-    }))
-  }
+describe('Router test', () => {
+    it('should return monitpring page on route "/"', (done) => {
+        // this.timeout = 1000
+        const server = makeServer(1234)
+        supertest(server)
+            .get('/')
+            .expect(200)
+            .end((err, res) => {
+                console.log(err)
+                expect(err).to.equal(null)
+                expect(res.text).to.match(/You visited following IP addresses/)
+                killServer(server)
+                done()
+            })
+    })
+    it('should return monitpring page on another route', (done) => {
+        // this.timeout = 1000
+        const server = makeServer(1234)
+        supertest(server)
+            .get('/anotherRoute')
+            .expect(200)
+            .end((err, res) => {
+                console.log(err)
+                expect(err).to.equal(null)
+                expect(res.text).to.match(/You visited following IP addresses/)
+                killServer(server)
+                done()
+            })
+    })
 })
 
-buster.testCase('cleanIP', {
-  'Should return clean IP': function () {
-    buster.assert.equals(app.removeIPv6Preface('::ffff:0.0.0.0'), '0.0.0.0')
-  }
+describe('clean IP address', () => {
+    it('should remove IPv6 preface', () => {
+        expect(removeIPv6Preface('::ffff:0.0.0.0')).to.be.equal('0.0.0.0')
+    })
 })
